@@ -71,7 +71,7 @@ function App() {
     }
 
      console.log('mode: ' + mode);
-    console.log(displayTime);
+    //console.log(displayTime);
 
     return (
         <div className="App">
