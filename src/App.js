@@ -20,20 +20,6 @@ function App() {
         );
     }
 
-    //====================================================================
-    // let timer;
-    //
-    // const start = () => {
-    //     if (mode) {
-    //         timer = setInterval(() => {
-    //             setDisplayTime((prev) => prev - 1);
-    //         }, 1000)
-    //         if (setDisplayTime === 0) {
-    //             return clearInterval(timer);
-    //         }
-    //     }
-    // }
-
 
 // ===================-- Кнопки Start и Stop --========================================================
 
