@@ -5,8 +5,8 @@ import Length from "./components/Length";
 
 function App() {
 
-    const [brakeTime, setBrakeTime] = useState(0.25 * 60);
-    const [pomodoroTime, setPomodoroTime] = useState(15);
+    const [brakeTime, setBrakeTime] = useState(5);
+    const [pomodoroTime, setPomodoroTime] = useState(10);
     const [displayTime, setDisplayTime] = useState(pomodoroTime);
     const [mode, setMode] = useState('work'); // work/brake/null
     const [isPaused, setIsPaused] = useState(true);
@@ -27,28 +27,37 @@ function App() {
         setDisplayTime(displayTime - 1);
     }
 
-    console.log(isPaused);
+    let interval;
 
     useEffect(() => {
 
         function switchMode() {
             const nextMode = mode === 'work' ? 'break' : 'work';
             setMode(nextMode);
-            console.log('switchMode has been working...')
+
         }
 
-        const interval = setInterval(() => {
+             interval = setInterval(() => {
             if (isPaused) {
                 return;
             }
             if (displayTime === 0) {
                 return switchMode();
+                if (mode === 'work') {
+                    setDisplayTime(pomodoroTime);
+                } else {
+                    setDisplayTime(brakeTime);
+                }
             }
             tick();
         }, 1000)
 
         return () => clearInterval(interval);
     })
+
+    function stop() {
+        clearInterval(interval);
+    }
 
 // =============================================================================
 
@@ -61,6 +70,9 @@ function App() {
         }
     }
 
+     console.log('mode: ' + mode);
+    // console.log(displayTime);
+
     return (
         <div className="App">
             <Length title="Pomodoro length" time={pomodoroTime} changeTime={changeTime} type='pomodoro'/>
@@ -69,7 +81,7 @@ function App() {
                 <h3>Display time</h3>
                 <h1>{formatTime(displayTime)}</h1>
                 <button onClick={() => setIsPaused(false)}>Starting!</button>
-                <button onClick={null}>Stop</button>
+                <button onClick={stop}>Stop</button>
             </div>
         </div>
     );
