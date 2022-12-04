@@ -52,12 +52,12 @@ function App() {
         }
     }
 
-    function skipBrake() {
-        if (isPaused && mode) {
-            setTextButton('Skip brake');
-            clearInterval(interval);
-        }
-    }
+    // function skipBrake() {
+    //     if (isPaused && mode) {
+    //         setTextButton('Skip brake');
+    //         clearInterval(interval);
+    //     }
+    // }
 
     let interval;
 
