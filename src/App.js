@@ -1,6 +1,7 @@
 import './App.css';
 import React from "react";
 import {useState, useEffect} from "react";
+import Length from "./components/Length";
 
 function App() {
 
@@ -65,13 +66,6 @@ function App() {
         }
     }
 
-    // function skipBrake() {
-    //     if (isPaused && mode) {
-    //         setTextButton('Skip brake');
-    //         clearInterval(interval);
-    //     }
-    // }
-
     let interval;
 
     useEffect(() => {
@@ -102,22 +96,24 @@ function App() {
 
 // =============================================================================
 
-    console.log('mode: ' + mode);
+    //console.log('mode: ' + mode);
 
     return (
         <div className="App">
-            <div>
-                <h2>Display time</h2>
-                <h3>{statusMessage}</h3>
-                <h1>{formatTime(displayTime)}</h1>
-                {!isPaused
-                    ? <button onClick={start}>{textButton}</button>
-                    : <div>
-                        <button onClick={start}>Continue</button>
-                        <button onClick={stop}>Stop</button>
-                    </div>
-                }
-
+            <Length brakeTime={brakeTime} pomodoroTime={pomodoroTime}/>
+            <div className={mode ? 'work-mode' : 'brake-mode'}>
+                <div className="timer">
+                    <h2>Display time</h2>
+                    <h3>{statusMessage}</h3>
+                    <h1>{formatTime(displayTime)}</h1>
+                    {!isPaused
+                        ? <button onClick={start}>{textButton}</button>
+                        : <div>
+                            <button onClick={start}>Continue</button>
+                            <button onClick={stop}>Stop</button>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     );

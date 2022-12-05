@@ -33,5 +33,11 @@
 }
 
 .brake-mode {
-  background-color: skyblue;
+  background-color: steelblue;
+}
+
+.timer {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
