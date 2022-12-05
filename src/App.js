@@ -11,7 +11,7 @@ function App() {
     const [isPaused, setIsPaused] = useState(false);
     const [textButton, setTextButton] = useState('Start');
     const [mode, setMode] = useState(true);
-    const [showMessage, setShowMessage] = useState('Lets to work!');
+    const [statusMessage, setStatusMessage] = useState('Lets to work!');
 
 // =============== Вынести в компонет Format Time ====================================
     const formatTime = (time) => {
@@ -27,6 +27,8 @@ function App() {
     function start() {
         if (isWorking) {
             setIsPaused(true);
+        } else {
+            setIsPaused(false);
         }
 
         setIsWorking(!isWorking);
@@ -39,16 +41,27 @@ function App() {
 
     function stop() {
         clearInterval(interval);
+        if (isPaused) {
+            setIsPaused(false);
+            setDisplayTime(0)
+            if (mode) {
+                setStatusMessage("Time to work!");
+                setDisplayTime(pomodoroTime);
+            } else {
+                setStatusMessage("Time to rest");
+                setDisplayTime(brakeTime);
+            }
+        }
     }
 // ===============================================================================
     function switchMode() {
         setMode(!mode);
         if (!mode) {
             setDisplayTime(pomodoroTime);
-            setShowMessage('Time to work!');
+            setStatusMessage('Time to work!');
         } else {
             setDisplayTime(brakeTime);
-            setShowMessage('Time to rest!');
+            setStatusMessage('Time to rest!');
         }
     }
 
@@ -70,9 +83,12 @@ function App() {
             }, 1000)
         }
         if (isWorking && mode) {
-            setShowMessage('working time...')
+            setStatusMessage('working time...')
         } else if (isWorking && !mode) {
-            setShowMessage('resting time...')
+            setStatusMessage('resting time...')
+        }
+        if (isPaused) {
+
         }
         if (displayTime === 0) {
             stop();
@@ -92,7 +108,7 @@ function App() {
         <div className="App">
             <div>
                 <h2>Display time</h2>
-                <h3>{showMessage}</h3>
+                <h3>{statusMessage}</h3>
                 <h1>{formatTime(displayTime)}</h1>
                 {!isPaused
                     ? <button onClick={start}>{textButton}</button>
