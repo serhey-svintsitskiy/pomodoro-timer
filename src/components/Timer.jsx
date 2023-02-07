@@ -10,10 +10,11 @@ import {
     selectMode,
     start,
     stopTimer,
-    stop,
+    /*stop,*/
     selectWorkedTime,
 } from "../store/timerSlice";
-import { selectCurrentTask, countTotal } from "../store/taskSlice";
+import { selectCurrentTask/*, countTotal*/ } from "../store/taskSlice";
+import Button from 'react-bootstrap/Button';
 
 
 export const Timer = () => {
@@ -23,7 +24,7 @@ export const Timer = () => {
     const isWorking = useSelector(selectIsWorking);
     const isPausing = useSelector(selectIsPause);
     const currentTask = useSelector(selectCurrentTask);
-    const workedTime = useSelector(selectWorkedTime);
+    /*const workedTime =*/ useSelector(selectWorkedTime);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -50,15 +51,15 @@ export const Timer = () => {
                 {currentTask.title ? <h3>Current task: {currentTask.title}</h3> : null}
                 <h2>{formatTime(displayTime)}</h2>
                 {!isPausing
-                    ? <button onClick={() => {
+                    ? <Button onClick={() => {
                             !isWorking ? dispatch(start())
                                 : mode === "pomodoro" ? dispatch(pause()) : dispatch(stopTimer())
                         }}>
                             {!isWorking ? "Start" : mode === "pomodoro" ? "Pause" : "Skip brake"}
-                        </button>
+                        </Button>
                     : <div>
-                        <button onClick={() => dispatch(start())}>Continue</button>
-                        <button onClick={() => dispatch(stopTimer())}>Stop</button>
+                        <Button onClick={() => dispatch(start())}>Continue</Button>
+                        <Button onClick={() => dispatch(stopTimer())}>Stop</Button>
                     </div>
                 }
             </div>

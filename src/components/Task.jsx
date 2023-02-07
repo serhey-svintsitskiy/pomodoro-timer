@@ -2,6 +2,7 @@ import { useInView } from "react-intersection-observer";
 import { useDispatch } from "react-redux";
 import { removeTask, completeTask, setCurrentTask } from "../store/taskSlice";
 import { startTrackingTask } from "../store/timerSlice";
+import Button from 'react-bootstrap/Button';
 
 const Task = ({task}) => {
 
@@ -27,9 +28,9 @@ const Task = ({task}) => {
                 <input
                     type="checkbox"
                     checked={task.complete}
-                    onChange={(e) => dispatch(completeTask(task))}
+                    onChange={() => dispatch(completeTask(task))}
                 />
-                <button onClick={() => trackTask(task)}>Play</button>
+                <Button onClick={() => trackTask(task)}>Play</Button>
                 <div style={{
                     margin: '20px',
                     display: 'flex',
@@ -47,7 +48,7 @@ const Task = ({task}) => {
                 <div style={{margin: '5px'}}>
                     <strong>{task.totalTime} hour</strong>
                 </div>
-                <button style={{marginRight: 'auto'}} onClick={() => dispatch(removeTask(task))}>X</button>
+                <Button style={{marginRight: 'auto'}} onClick={() => dispatch(removeTask(task))}>X</Button>
             </div>
         </div>
     );
