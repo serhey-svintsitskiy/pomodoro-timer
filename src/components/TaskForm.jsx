@@ -1,15 +1,15 @@
-import { useState } from 'react';
-import { useSelector, useDispatch } from "react-redux";
-import { createTask, searchTask } from "../store/taskSlice";
+import {useState} from 'react';
+import {useSelector, useDispatch} from "react-redux";
+import {createTask, searchTask} from "../store/TaskSlice";
 
 const TaskForm = () => {
 
     const dispatch = useDispatch();
-    const { searchQuery } = useSelector((state) => state.tasks);
+    const {searchQuery} = useSelector((state) => state.tasks);
 
     const [task, setTask] = useState({title: ''})
 
-    const createNewTask = (e) => {
+    const createNewTask = (e: MouseEvent) => {
         e.preventDefault();
         const newTask = {...task, id: Date.now(), complete: false, totalTime: 0};
         dispatch(createTask(newTask));
@@ -17,14 +17,12 @@ const TaskForm = () => {
     }
 
     return (
-        <form className="taskForm" >
-
+        <form className="taskForm">
             <div className="create-task">
                 <input
                     type="text"
                     value={task.title}
                     onChange={e => setTask({...task, title: e.target.value})}
-
                     placeholder="enter task name"
                 />
                 <button onClick={createNewTask}>Create task</button>

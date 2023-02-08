@@ -1,19 +1,11 @@
 import Task from "./Task";
-import { useSelector } from 'react-redux';
-import { selectTasks, selectSearchQuery } from "../store/taskSlice";
-import { selectCurrentTask } from "../store/taskSlice";
+import {useSelector} from 'react-redux';
+import {selectTasks, selectSearchQuery} from "../store/TaskSlice";
 
 const TaskList = () => {
-
-    const currentTask = useSelector(selectCurrentTask);
-
     const tasks = useSelector(selectTasks);
     const searchQuery = useSelector(selectSearchQuery);
-
-    const filteredTasks = tasks.filter(t =>
-        t.title.toLowerCase().includes(searchQuery.toLowerCase()));
-
-    console.table(currentTask);
+    const filteredTasks = tasks.filter(t => t.title.toLowerCase().includes(searchQuery.toLowerCase()));
 
     return (
         <div>

@@ -1,7 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { countTotal } from "./taskSlice";
+import { countTotal } from "./TaskSlice";
 
-const initialState = {
+interface initalStateInterface {
+    pomodoroTime: number,
+    breakTime: number,
+    displayTime: number,
+    isWorking: boolean,
+    isPause: boolean,
+    mode: string,
+    workedTime: number
+}
+
+const initialState: initalStateInterface = {
     pomodoroTime: 10,
     breakTime: 5,
     displayTime: 10,
@@ -15,15 +25,14 @@ export const timerSlice = createSlice({
     name: "timerSlice",
     initialState,
     reducers: {
-
-        decrement: (state) => {
+        decrement: (state: initalStateInterface) => {
             state.displayTime -= 1;
         },
-        start: (state) => {
+        start: (state: initalStateInterface) => {
             state.isWorking = true;
             state.isPause = false;
         },
-        stop: (state) => {
+        stop: (state: initalStateInterface) => {
             state.isWorking = false;
             state.isPause = false;
             if (state.mode === 'pomodoro') {
@@ -36,28 +45,26 @@ export const timerSlice = createSlice({
             }
             console.log(state.workedTime);
         },
-        pause: (state) => {
+        pause: (state: initalStateInterface) => {
             state.isPause = true;
             state.isWorking = false;
         },
-        startTrackingTask: (state) => {
+        startTrackingTask: (state: initalStateInterface) => {
             state.mode = 'pomodoro';
             state.displayTime = state.pomodoroTime;
             state.isWorking = true;
             state.isPause = false;
         },
-        changeMode: (state, action) => {
+        changeMode: (state: initalStateInterface, action) => {
             state.mode = action.payload.mode;
         },
     }
 });
 
-export const {decrement, start, stop, pause, startTrackingTask, changeMode} = timerSlice.actions;
+export const {decrement, start, stop, pause, startTrackingTask} = timerSlice.actions;
 
 export const selectDisplayTime = (state) => state.timer.displayTime;
 export const selectMode = (state) => state.timer.mode;
-export const selectPomodoroTime = (state) => state.timer.pomodoroTime;
-export const selectBreakTime = (state) => state.timer.breakTime;
 export const selectIsWorking = (state) => state.timer.isWorking;
 export const selectIsPause = (state) => state.timer.isPause;
 export const selectWorkedTime = (state) => state.timer.workedTime;

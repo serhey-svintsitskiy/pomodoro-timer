@@ -1,7 +1,15 @@
 import {createSlice} from "@reduxjs/toolkit";
+import type { PayloadAction } from '@reduxjs/toolkit'
+import type {TaskInterface} from './TaskModel';
 
-const initialState = {
+interface initalStateInterface {
+    tasks: TaskInterface[],
+    searchQuery: string,
+    completedTasks: TaskInterface[],
+    currentTask?: TaskInterface,
+}
 
+const initialState: initalStateInterface = {
     tasks: [
         {id: 1, title: 'sleep', complete: false, totalTime: 0},
         {id: 2, title: 'play Witcher', complete: false, totalTime: 0},
@@ -16,17 +24,17 @@ const initialState = {
     ],
     searchQuery: '',
     completedTasks: [],
-    currentTask: {},
+    currentTask: null,
 }
 
 export const taskSlice = createSlice({
         name: "taskSlice",
         initialState,
         reducers: {
-            createTask: (state, action) => {
+            createTask: (state, action: PayloadAction<TaskInterface>) => {
                 state.tasks.push(action.payload);
             },
-            completeTask: (state, action) => {
+            completeTask: (state, action: PayloadAction<TaskInterface>) => {
                 state.tasks = state.tasks.map((task =>
                     task.id === action.payload.id
                         ? {...task, complete: !task.complete}
@@ -45,7 +53,7 @@ export const taskSlice = createSlice({
             },
             countTotal: (state, action) => {
                 state.tasks = state.tasks.map(task =>
-                    task.id === state.currentTask.id
+                    state.currentTask && task.id === state.currentTask.id
                         ? {...task, totalTime: task.totalTime + action.payload.workedTime}
                         : task);
             },
@@ -54,9 +62,8 @@ export const taskSlice = createSlice({
 
 export const {createTask, searchTask, removeTask, completeTask, setCurrentTask, countTotal} = taskSlice.actions;
 
-export const selectTasks = (state) => state.tasks.tasks;
-export const selectSearchQuery = (state) => state.tasks.searchQuery;
-export const selectCurrentTask = (state) => state.tasks.currentTask;
-
+export const selectTasks = (state): TaskInterface[] => state.tasks.tasks;
+export const selectSearchQuery = (state): string => state.tasks.searchQuery;
+export const selectCurrentTask = (state): TaskInterface => state.tasks.currentTask;
 
 export default taskSlice.reducer;
