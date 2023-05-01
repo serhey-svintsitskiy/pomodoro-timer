@@ -1,6 +1,14 @@
+"use strict";
+
 import {createSlice} from "@reduxjs/toolkit";
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type {TaskInterface} from './TaskModel';
+
+export interface TaskInterface {
+    id: number,
+    title: string,
+    complete: boolean,
+    totalTime: number,
+}
 
 interface initalStateInterface {
     tasks: TaskInterface[],
@@ -24,7 +32,7 @@ const initialState: initalStateInterface = {
     ],
     searchQuery: '',
     completedTasks: [],
-    currentTask: null,
+    currentTask: undefined,
 }
 
 export const taskSlice = createSlice({
@@ -35,10 +43,15 @@ export const taskSlice = createSlice({
                 state.tasks.push(action.payload);
             },
             completeTask: (state, action: PayloadAction<TaskInterface>) => {
-                state.tasks = state.tasks.map((task =>
-                    task.id === action.payload.id
-                        ? {...task, complete: !task.complete}
-                        : task));
+                state.tasks = state.tasks.map(
+                    function (task) {
+                        if (task.id === action.payload.id) {
+                            return {...task, complete: !task.complete};
+                        } else {
+                            return task;
+                        }
+                    }
+                );
                 state.completedTasks.push(action.payload);
                 state.tasks = state.tasks.filter(task => task.complete === false);
             },
@@ -52,18 +65,23 @@ export const taskSlice = createSlice({
                 state.currentTask = action.payload;
             },
             countTotal: (state, action) => {
-                state.tasks = state.tasks.map(task =>
-                    state.currentTask && task.id === state.currentTask.id
-                        ? {...task, totalTime: task.totalTime + action.payload.workedTime}
-                        : task);
+                state.tasks = state.tasks.map(
+                    function (task) {
+                        if (state.currentTask && task.id === state.currentTask.id) {
+                            return {...task, totalTime: task.totalTime + action.payload.workedTime};
+                        } else {
+                            return task;
+                        }
+                    }
+                );
             },
         }
     });
 
 export const {createTask, searchTask, removeTask, completeTask, setCurrentTask, countTotal} = taskSlice.actions;
 
-export const selectTasks = (state): TaskInterface[] => state.tasks.tasks;
-export const selectSearchQuery = (state): string => state.tasks.searchQuery;
-export const selectCurrentTask = (state): TaskInterface => state.tasks.currentTask;
+export const selectTasks = (state: any): TaskInterface[] => state.tasks.tasks;
+export const selectSearchQuery = (state: any): string => state.tasks.searchQuery;
+export const selectCurrentTask = (state: any): TaskInterface => state.tasks.currentTask;
 
 export default taskSlice.reducer;

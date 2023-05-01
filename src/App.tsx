@@ -1,14 +1,15 @@
-import './App.css';
+"use strict";
 
-import Tasks from "./components/Tasks";
-import Timer from "./components/Timer";
+import './App.css';
 
 import {Provider} from 'react-redux';
 import {configureStore} from '@reduxjs/toolkit';
-import taskSliceReducer from './store/TaskSlice';
-import timerSliceReducer from './store/TimerSlice';
+import taskSliceReducer from './components/TaskSlice';
+import timerSliceReducer from './components/TimerSlice';
+import Tasks from "./components/Tasks";
+import Timer from "./components/Timer";
 
-export const PomodoreStore = configureStore({
+const PomodoreStore = configureStore({
     reducer: {
         tasks: taskSliceReducer,
         timer: timerSliceReducer

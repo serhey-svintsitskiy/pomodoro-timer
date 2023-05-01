@@ -1,15 +1,15 @@
 import {useState} from 'react';
 import {useSelector, useDispatch} from "react-redux";
-import {createTask, searchTask} from "../store/TaskSlice";
+import {createTask, searchTask} from "./TaskSlice";
 
 const TaskForm = () => {
 
     const dispatch = useDispatch();
-    const {searchQuery} = useSelector((state) => state.tasks);
+    const {searchQuery} = useSelector((state: any) => state.tasks);
 
     const [task, setTask] = useState({title: ''})
 
-    const createNewTask = (e: MouseEvent) => {
+    const createNewTask = (e: any) => {
         e.preventDefault();
         const newTask = {...task, id: Date.now(), complete: false, totalTime: 0};
         dispatch(createTask(newTask));

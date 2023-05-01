@@ -1,3 +1,5 @@
+"use strict";
+
 import { createSlice } from "@reduxjs/toolkit";
 import { countTotal } from "./TaskSlice";
 
@@ -63,13 +65,13 @@ export const timerSlice = createSlice({
 
 export const {decrement, start, stop, pause, startTrackingTask} = timerSlice.actions;
 
-export const selectDisplayTime = (state) => state.timer.displayTime;
-export const selectMode = (state) => state.timer.mode;
-export const selectIsWorking = (state) => state.timer.isWorking;
-export const selectIsPause = (state) => state.timer.isPause;
-export const selectWorkedTime = (state) => state.timer.workedTime;
+export const selectDisplayTime = (state: any) => state.timer.displayTime;
+export const selectMode = (state: any) => state.timer.mode;
+export const selectIsWorking = (state: any) => state.timer.isWorking;
+export const selectIsPause = (state: any) => state.timer.isPause;
+export const selectWorkedTime = (state: any) => state.timer.workedTime;
 
-export const formatTime = (time) => {
+export const formatTime = (time: any) => {
     let minutes = Math.floor(time / 60);
     let seconds = time % 60;
     return (
@@ -77,12 +79,11 @@ export const formatTime = (time) => {
     );
 }
 
-export const stopTimer = () => (dispatch, getState) => {
+export const stopTimer = (): any => (dispatch: any, getState: any) => {
     const currentWorkedTime = selectWorkedTime(getState());
 
     dispatch(countTotal({workedTime: currentWorkedTime}));
     dispatch(stop());
 }
-
 
 export default timerSlice.reducer;

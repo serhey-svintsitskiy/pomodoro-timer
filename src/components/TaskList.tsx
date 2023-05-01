@@ -1,6 +1,6 @@
 import Task from "./Task";
 import {useSelector} from 'react-redux';
-import {selectTasks, selectSearchQuery} from "../store/TaskSlice";
+import {selectTasks, selectSearchQuery} from "./TaskSlice";
 
 const TaskList = () => {
     const tasks = useSelector(selectTasks);

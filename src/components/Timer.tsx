@@ -10,8 +10,8 @@ import {
     selectMode,
     start,
     stopTimer,
-} from "../store/TimerSlice";
-import { selectCurrentTask } from "../store/TaskSlice";
+} from "./TimerSlice";
+import { selectCurrentTask } from "./TaskSlice";
 
 
 export const Timer = () => {

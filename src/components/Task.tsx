@@ -1,11 +1,11 @@
 import { useInView } from "react-intersection-observer";
 import { useDispatch } from "react-redux";
-import { removeTask, completeTask, setCurrentTask } from "../store/TaskSlice";
-import { startTrackingTask } from "../store/TimerSlice";
+import { removeTask, completeTask, setCurrentTask } from "./TaskSlice";
+import { startTrackingTask } from "./TimerSlice";
 
-const Task = ({task}) => {
+const Task = ({task}: any) => {
     const dispatch = useDispatch();
-    const trackTask = (task) => {
+    const trackTask = (task: any) => {
         dispatch(startTrackingTask());
         dispatch(setCurrentTask(task));
     }   
